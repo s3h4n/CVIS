@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% set active_page = "dashboard" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block heading %}
+<h1 class="my-5">Hello ! {{current_user.username}} 👋</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row my-5">
+    <div class="col-lg-6">
+        <h3 class="mb-5">Current Status</h3>
+        <canvas id="myChart" style="width:100%;"></canvas>
+    </div>
+    <div class="col-lg-6">
+    </div>
+    <hr class="my-5" />
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <span class="fw-bold text-muted">
+                            Total new users for today
+                        </span>
+                        <h1 class="display-1">
+                            {{ today_users }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <span class="fw-bold text-muted">
+                            Total number of all users
+                        </span>
+                        <h1 class="display-1">
+                            {{ all_users_count }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <span class="fw-bold text-muted">
+                            Total confirmed users
+                        </span>
+                        <h1 class="display-1">
+                            {{ confirmed_users }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <span class="fw-bold text-muted">
+                            Total unconfirmed users
+                        </span>
+                        <h1 class="display-1">
+                            {{ unconfirmed_users }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="my-5" />
+<div class="col-lg-12">
+    <h3 class="mb-5">Tools and Settings</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="fw-bold mb-3">
+                This will delete the users that don't have image directories and image directories that don't have
+                user data.
+            </div>
+            <a class="btn btn-dark text-capitalize w-100" href="{{url_for('routes.cleanup_database')}}">
+                Clean up the database
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+<script>
+    let xValues = ["Dose 1", "Dose 2", "Dose 3", "Dose 4"];
+    let yValues = [parseInt("{{user_vac_count[0]}}"), parseInt("{{user_vac_count[1]}}"), parseInt("{{user_vac_count[2]}}"), parseInt("{{user_vac_count[3]}}")];
+
+    let barColors = [
+        "#dc3545",
+        "#ffc107",
+        "#0d6efd",
+        "#198754",
+    ];
+
+
+    new Chart("myChart", {
+        type: "doughnut",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Users vs Number of Doses"
+            }
+        }
+    });
+</script>
+{% endblock %}

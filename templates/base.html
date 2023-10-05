@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CVIS | {% block title %}{% endblock %}</title>
+
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Raleway:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/bootstrap.min.css') }}">
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            user-select: none;
+        }
+
+        body {
+            font-family: "Raleway", system-ui, sans-serif !important;
+            overflow-y: scroll;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6,
+        display-1,
+        display-2,
+        display-3,
+        display-4,
+        display-5,
+        display-6 {
+            font-family: "Poppins", system-ui, sans-serif !important;
+        }
+
+        *::-webkit-scrollbar-track {
+            background-color: #f8f9fa;
+        }
+
+        *::-webkit-scrollbar {
+            width: 0.25rem;
+            background-color: #f8f9fa;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: #03045e;
+        }
+
+
+        #sidebar-wrapper {
+            min-height: 100vh;
+            margin-left: -15rem;
+            transition: margin 0.25s ease-out;
+            position: fixed;
+        }
+
+        #sidebar-wrapper .sidebar-heading {
+            padding: 0.875rem 1.25rem;
+            font-size: 1.2rem;
+        }
+
+        #sidebar-wrapper .list-group {
+            width: 15rem;
+        }
+
+        #page-content-wrapper {
+            min-width: 100vw;
+        }
+
+        body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+            margin-left: 0;
+        }
+
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
+
+            body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+                margin-left: -15rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light" style="overflow-x:hidden;">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"
+        defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"
+        defer></script>
+
+    <div
+        class="mobile-content bg-dark d-flex justify-content-center align-items-center min-vh-100 d-lg-none d-xl-none d-xxl-none">
+        <div class="text-white text-center p-5">
+            <h1>
+                Please use a desktop to access the admin panel.
+            </h1>
+            <hr class="my-5" />
+            <h3>CVIS</h3>
+        </div>
+    </div>
+
+    <div class="desktop-content d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block min-vh-100 mb-5">
+        <div class="d-flex" id="wrapper">
+
+            {% if active_page != "login" and active_page != "company_dashboard" %}
+
+            <!-- Sidebar-->
+            <div class="border-end bg-white fw-semibold text-capitalize shadow-sm" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom px-4 py-4 ">
+                    <i class="fa-solid fa-bolt me-3"></i>
+                    Admin Panel
+                </div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item px-4 py-4 {{ 'active' if active_page == 'dashboard' else '' }}"
+                        href="{{url_for('routes.dashboard')}}">
+                        <i class=" fa-solid fa-home me-3"></i>Dashboard
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item px-4 py-4 {{ 'active' if active_page == 'unconfirmed_users' else '' }}"
+                        href="{{url_for('routes.display_users', option='new')}}">
+                        <i class="fa-solid fa-user-pen me-3"></i>New users
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item px-4 py-4 {{ 'active' if active_page == 'confirmed_users' else '' }}"
+                        href="{{url_for('routes.display_users', option='con')}}">
+                        <i class=" fa-solid fa-user-check me-3"></i>Confirmed users
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item px-4 py-4 {{ 'active' if active_page == 'all_users' else '' }}"
+                        href="{{url_for('routes.display_users', option='all')}}">
+                        <i class=" fa-solid fa-users me-3"></i> All users
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item px-4 py-4 {{ 'active' if active_page == 'user_management' else '' }}"
+                        href="{{url_for('routes.manage_auth_users')}}">
+                        <i class="fa-solid fa-user-gear me-3"></i> User Management
+                    </a>
+                </div>
+            </div>
+
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper" style="margin-left:15rem;">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-primary">
+                    <div class="container-fluid">
+                        <a href="/" class="btn border-0 text-white">
+                            <i class="fa-solid fa-syringe me-3"></i> CVIS | Covid-19 Vaccination Information System
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            {% if current_user.is_authenticated %}
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <img src="https://avatars.dicebear.com/api/bottts/{{current_user.username}}.svg?b=white"
+                                    class="m-auto rounded-circle" alt="{{current_user.username}}" style="width: 2rem;">
+                                <a class="nav-link p-3" aria-current="page" href="#">
+                                    {{ current_user.username }}
+                                </a>
+                                <a class="nav-link p-3 active" aria-current="page" href="/logout">
+                                    Logout
+                                </a>
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
+
+                {% endif %}
+
+                <!-- Page content-->
+                <div class="container px-5">
+
+                    {% if active_page != "login" %}
+
+                    {% block heading %}{% endblock %}
+                    <hr class="my-5" />
+
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <div class=flashes>
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    {% endif %}
+                    <div class="my-5"></div>
+                    {% block content %}{% endblock %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light mt-auto">
+        <p class="text-center text-muted pt-3">
+            Covid-19 Vaccination Information System
+        </p>
+    </footer>
+
+</body>
+
+</html>

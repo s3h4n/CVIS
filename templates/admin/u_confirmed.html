@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% set active_page = "confirmed_users" %}
+
+{% block title %}Confirmed Users{% endblock %}
+
+{% block heading %}
+<h1 class="my-5">Confirmed Users</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for user in users %}
+    <div class="col-lg-4 mb-4">
+        <div class="card rounded-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ user.first_name }} {{ user.last_name }}
+                    {% if user.status == 1 %}
+                    <i class="fa-solid text-success fa-circle-check ms-1"></i>
+                    {% endif %}
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {% if user.gender == 'Male' %}
+                    👦
+                    {% else %}
+                    👧
+                    {% endif %}
+                    {{ user.user_token }}
+                </h6>
+                <p class="card-text">
+                    <span class="fw-bold">Email : </span>{{ user.email }} <br />
+                    <span class="fw-bold">Registerd at : </span>{{ user.created_at }}
+                </p>
+                <a href="{{url_for('routes.user_info', token=user.user_token)}}"
+                    class="float-end btn btn-outline-primary mt-3">
+                    View <i class="fa-solid fa-angle-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

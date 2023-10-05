@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% set active_page = "all_users" %}
+
+{% block title %}All Users{% endblock %}
+
+{% block heading %}
+<h1 class="my-5">All Users</h1>
+<div class="alert alert-light border border-1 rounded-3">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="fw-bold mb-3">Sort Options:</div>
+            <a class="btn btn-dark mb-2" href="{{url_for('routes.sort_users',option='atoz')}}">A-Z</a>
+            <a class="btn btn-dark mb-2" href="{{url_for('routes.sort_users',option='ztoa')}}">Z-A</a>
+            <a class="btn btn-dark mb-2" href="{{url_for('routes.sort_users',option='newest')}}">Neweset</a>
+            <a class="btn btn-dark mb-2" href="{{url_for('routes.sort_users',option='oldest')}}">Oldest</a>
+        </div>
+        <div class="col-md-6">
+            <div class="fw-bold mb-3">Search:</div>
+            <form class="input-group mb-3" action="{{url_for('routes.search_users')}}" method="GET">
+                <input type="text" name="searchInp" class="form-control" placeholder="Type anything...">
+                <select class="form-select" name="searchFilter" style="max-width: 8vw;">
+                    <option value="first_name" selected>First Name</option>
+                    <option value="last_name">Last Name</option>
+                    <option value="uid">User ID</option>
+                    <option value="town">Town</option>
+                </select>
+                <button type="submit" class="btn btn-dark">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for user in users %}
+    <div class="col-lg-4 mb-4">
+        <div class="card rounded-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ user.first_name }} {{ user.last_name }}
+                    {% if user.status == 1 %}
+                    <i class="fa-solid text-success fa-circle-check ms-1"></i>
+                    {% endif %}
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {% if user.gender == 'Male' %}
+                    👦
+                    {% else %}
+                    👧
+                    {% endif %}
+                    {{ user.user_token }}
+                </h6>
+                <p class="card-text">
+                    <span class="fw-bold">Email : </span>{{ user.email }} <br />
+                    <span class="fw-bold">Registerd at : </span>{{ user.created_at }}
+                </p>
+                <a href="{{url_for('routes.user_info', token=user.user_token)}}"
+                    class="float-end btn btn-outline-primary mt-3">
+                    View <i class="fa-solid fa-angle-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

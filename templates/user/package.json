@@ -1,0 +1,32 @@
+{
+  "name": "cvis-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "watch": "npm-watch"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.5",
+    "@sveltejs/vite-plugin-svelte": "^1.0.1",
+    "bootstrap": "^5.2.0",
+    "npm-watch": "^0.11.0",
+    "sass": "^1.53.0",
+    "svelte": "^3.49.0",
+    "svelte-preprocess": "^4.10.7",
+    "vite": "^3.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "html5-qrcode": "^2.2.1",
+    "svelte-spa-router": "^3.2.0",
+    "sweetalert2": "^11.4.24",
+    "yup": "^0.32.11"
+  },
+  "watch": {
+    "build": "src/"
+  }
+}

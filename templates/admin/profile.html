@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block heading %}
+<div class="my-5 d-flex">
+    <div class="w-25 me-4">
+        <img src="https://avatars.dicebear.com/api/initials/{{user.first_name}}%20{{user.last_name}}.svg?mood[]=happy"
+            class="m-atuo rounded-circle border border-info border-5" alt="{{user.gender}}" style="width: 7rem;">
+    </div>
+    <div class="w-100 mt-2">
+        <h1>{{ user.first_name }} {{ user.last_name }}
+            {% if user.status == 1 %}
+            <i class="fa-solid text-success fa-circle-check ms-1"></i>
+            {% endif %}
+        </h1>
+        <h3 class="text-muted">{{ user.user_token }}</h3>
+    </div>
+    <div class="w-100">
+        <a class="btn btn-primary float-end ms-3"
+            href="{{url_for('routes.update_status', token=user.user_token, current_status=user.status)}}">
+            Set as
+            {% if user.status == 0 %}
+            Vaccinated
+            {% else %}
+            Not Vaccinated
+            {% endif %}
+        </a>
+        <button class="btn btn-outline-danger float-end" id="deleteBtn">
+            Delete
+            {{ user.user_token }}
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card my-5">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    {% for image in images %}
+                    <div class="col-md-3">
+                        <label for=""> {{ image }} </label>
+                        <img class="img-fluid" src="data:image/;base64,{{ images[image] }}" alt="{{ image }}"
+                            data-bs-toggle="modal" data-bs-target="#{{image}}" />
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <hr class="my-5" />
+            <div class="col-md-12">
+                <table class="table table-borderless table-responsive text-break">
+                    <tr>
+                        <th scope="row">Date of Birth </th>
+                        <td>
+                            {{ user.dob }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Gender </th>
+                        <td>
+                            {{ user.gender }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email </th>
+                        <td>
+                            {{ user.email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Mobile </th>
+                        <td>
+                            {{ user.mobile }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Address</th>
+                        <td>
+                            {{ user.addr_line_1 }}, {{ user.addr_line_2 }}, {{ user.town }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"> {{ user.uid_type }}</th>
+                        <td>
+                            {{ user.uid }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"> Number of Vaccines </th>
+                        <td>
+                            {{ user.vac_count }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"> Vaccination Status </th>
+                        <td>
+                            {% if user.status == 0 %}
+                            Not Vaccinated
+                            {% else %}
+                            Vaccinated
+                            {% endif %}
+                    </tr>
+                    <tr>
+                        <th scope="row"> Registerd At </th>
+                        <td>
+                            {{ user.created_at }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for image in images %}
+<!-- Modal -->
+<div class="modal fade" id="{{image}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ user.user_token }} - {{image}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <img class="modal-body img-fluid" src="data:image/;base64,{{ images[image] }}" alt="{{ image }}" />
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<script>
+    document.getElementById("deleteBtn").onclick = (e) => {
+        Swal.fire({
+            title: "Confirm",
+            text: 'Are you sure that you want to delete the user {{user.user_token}} ?',
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted",
+                    text: 'User {{user.user_token}} has been successfully removed from the database.',
+                    icon: "success",
+                    confirmButtonText: 'Ok',
+                }).then(() => {
+                    location.href = "{{ url_for('routes.delete_user', token = user.user_token) }}";
+                })
+            }
+        })
+    }
+</script>
+
+{% endblock %}

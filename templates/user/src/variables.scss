@@ -1,0 +1,31 @@
+/* Variables and mixins declared here will be available in all other SCSS files */
+@import "bootstrap/scss/functions";
+
+/* Custom colors */
+$primary: #25a18e;
+$secondary: #00cba9;
+$info: #EDF2F4;
+$danger: #b81f31;
+$dark: #213547;
+$light: #FEFCFB;
+
+
+/* Override Bootstrap's variables here */
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "info": $info,
+    "dark": $dark,
+    "light": $light,
+    "danger": $danger,
+);
+
+$box-shadow: 0 .5rem 1rem rgba($dark, .15);
+$box-shadow-sm: 0 .125rem .25rem rgba($dark, .075);
+$box-shadow-lg: 0 1rem 3rem rgba($dark, .175);
+$box-shadow-inset: inset 0 1px 2px rgba($dark, .075);
+
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block heading %}
+<h1 class="my-5">
+    Profile Edit
+</h1>
+{% endblock %}
+
+{% block content %}
+<div class="card my-5">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="{{url_for('routes.edit_auth_users')}}" method="POST">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Username</label>
+                        <div class="form-control bg-light" name="username">{{user.username}}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="fname" value="{{user.firstname}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="lname" value="{{user.lastname}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Mobile</label>
+                        <input type="text" class="form-control" name="mobile" value="{{user.mobile}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Email address</label>
+                        <input type="text" class="form-control" name="mobile" value="{{user.email}}" disabled>
+                    </div>
+            </div>
+            <div class="mt-5">
+                <button type="submit" class="btn btn-primary float-end ms-3">
+                    Save Changes
+                </button>
+            </div>
+            </form>
+            <button class="btn btn-outline-danger float-end" id="deleteBtn">
+                Delete Account
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+    document.getElementById("deleteBtn").onclick = (e) => {
+        Swal.fire({
+            title: "Confirm",
+            text: 'Are you sure that you want to delete the user {{user.username}} ?',
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted",
+                    text: 'User {{user.username}} has been successfully removed from the database.',
+                    icon: "success",
+                    confirmButtonText: 'Ok',
+                }).then(() => {
+                    location.href = "{{ url_for('routes.delete_auth_user', email = user.email) }}";
+                })
+            }
+        })
+    }
+</script>
+
+{% endblock %}

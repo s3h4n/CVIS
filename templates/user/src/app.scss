@@ -1,0 +1,144 @@
+/* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
+/* Import only what you need from Bootstrap */
+
+@import "bootstrap/scss/root";
+
+@import "bootstrap/scss/reboot";
+
+@import "bootstrap/scss/type";
+
+@import "bootstrap/scss/images";
+
+@import "bootstrap/scss/containers";
+
+@import "bootstrap/scss/grid";
+
+@import "bootstrap/scss/tables";
+
+@import "bootstrap/scss/forms";
+
+@import "bootstrap/scss/buttons";
+
+@import "bootstrap/scss/transitions";
+
+@import "bootstrap/scss/dropdown";
+
+@import "bootstrap/scss/button-group";
+
+@import "bootstrap/scss/nav";
+
+@import "bootstrap/scss/navbar";
+
+@import "bootstrap/scss/card";
+
+@import "bootstrap/scss/accordion";
+
+@import "bootstrap/scss/breadcrumb";
+
+@import "bootstrap/scss/pagination";
+
+@import "bootstrap/scss/badge";
+
+@import "bootstrap/scss/alert";
+
+@import "bootstrap/scss/progress";
+
+@import "bootstrap/scss/list-group";
+
+@import "bootstrap/scss/close";
+
+@import "bootstrap/scss/toasts";
+
+@import "bootstrap/scss/modal";
+
+@import "bootstrap/scss/tooltip";
+
+@import "bootstrap/scss/popover";
+
+@import "bootstrap/scss/carousel";
+
+@import "bootstrap/scss/spinners";
+
+@import "bootstrap/scss/offcanvas";
+
+@import "bootstrap/scss/placeholders";
+
+@import "bootstrap/scss/helpers";
+
+@import "bootstrap/scss/utilities/api";
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  user-select: none;
+}
+
+body {
+  font-family: "Raleway", system-ui, sans-serif !important;
+  overflow-y: scroll;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: $light;
+}
+
+*::-webkit-scrollbar {
+  width: 0.25rem;
+  background-color: $light;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $dark;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+display-1,
+display-2,
+display-3,
+display-4,
+display-5,
+display-6 {
+  font-family: "Poppins", system-ui, sans-serif !important;
+  color: $dark;
+}
+
+.bg-grad {
+  background-color: $light;
+  //background-image: url('./assets/bg-gradient.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100%;
+  height: max-content;
+}
+
+.blur {
+  backdrop-filter: blur(5px);
+}
