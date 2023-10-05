@@ -8,4 +8,3 @@ This is a project that was done for the Mini Projects module in my University co
 
 Run `./setup.sh` for the first time.
 Then `flask run` command will be enough.
-Then `flask run` command will be enough
